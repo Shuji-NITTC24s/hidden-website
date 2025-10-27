@@ -1,5 +1,21 @@
+// Load shared header/footer includes, then run main initialization
+function loadIncludes(){
+  // try both common paths; pages expect includes/header.html and includes/footer.html
+  return Promise.all([
+    fetch('includes/header.html').then(r=> r.ok ? r.text() : ''),
+    fetch('includes/footer.html').then(r=> r.ok ? r.text() : '')
+  ]).then(([h, f])=>{
+    try{
+      const headerPlaceholder = document.getElementById('shared-header') || document.querySelector('header.site-header')
+      if(headerPlaceholder && h){ headerPlaceholder.innerHTML = h }
+      const footerPlaceholder = document.getElementById('shared-footer') || document.querySelector('footer.site-footer')
+      if(footerPlaceholder && f){ footerPlaceholder.innerHTML = f }
+    }catch(e){ console.warn('Error injecting includes', e) }
+  }).catch(err=>{ console.warn('Could not load includes', err) })
+}
+
 // Small interactive bits: confetti on button click
-(function(){
+function main(){
   const colors = ['#ff3b7a','#ffd166','#6bf7d4','#88b7ff','#d9a8ff']
 
   function makeConfetti(x,y){
@@ -237,4 +253,7 @@
     mobileNav.addEventListener('click', function(e){ if(e.target === mobileNav) closeMobile() })
   }
 
-})();
+}
+
+// Load includes first, then run main. If includes fail, still run main.
+loadIncludes().then(main).catch((e)=>{ console.warn('Includes load failed, continuing', e); main(); });

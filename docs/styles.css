@@ -26,8 +26,13 @@ body{
 .site-header{
   position:sticky;top:0;z-index:60;padding:14px 0;background:transparent;border-bottom:1px solid rgba(255,255,255,0.03);backdrop-filter:blur(6px)
 }
-.site-header .container{display:flex;align-items:center;justify-content:space-between;gap:16px}
-.logo{font-family:'Noto Serif JP', 'Noto Sans JP', serif; font-weight:700;margin:0;font-size:1.15rem;color:var(--text);letter-spacing:0.4px}
+.site-header .container{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:nowrap}
+.logo{font-family:'Noto Serif JP', 'Noto Sans JP', serif; font-weight:700;margin:0;font-size:1.15rem;color:var(--text);letter-spacing:0.4px;flex:1 1 0;min-width:0;display:flex;align-items:center}
+.logo img{height:44px;max-height:56px;width:auto;display:block}
+/* responsive header tweaks: prevent wrapping and keep controls aligned */
+.reserve-btn{white-space:nowrap}
+.menu-toggle{order:2}
+.reserve-btn{order:3}
 
 /* nav */
 .main-nav a{color:var(--muted);text-decoration:none;margin-left:18px;font-weight:600;padding:8px;border-radius:8px;transition:color .15s ease, background .15s ease}
@@ -87,7 +92,9 @@ a:focus{color:var(--text);outline:3px solid var(--ring);outline-offset:2px}
   .hero-inner{flex-direction:column;text-align:center}
   .main-nav{display:none}
   .menu-toggle{display:inline-block}
-  .reserve-btn{margin-left:8px}
+  .reserve-btn{margin-left:8px;padding:8px 10px;font-size:0.95rem}
+  .logo{font-size:1rem;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .logo img{height:36px;max-height:42px}
   .mascot svg{max-width:120px;height:auto}
 }
 

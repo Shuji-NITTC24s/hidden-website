@@ -10,36 +10,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700;900&family=Noto+Serif+JP:wght@400;700&display=swap" rel="stylesheet">
 </head>
 <body>
-  <header class="site-header">
-    <div class="container">
-      <h1 class="logo">秘宝タン・イーと記憶の洞窟</h1>
-      <nav class="main-nav" aria-label="グローバルナビ">
-        <a href="index.html">ホーム</a>
-        <a href="summary.html">あらすじ</a>
-        <a href="#gallery">ギャラリー</a>
-        <a href="#contact">お問い合わせ</a>
-      </nav>
-
-      <!-- Mobile menu toggle (shown on small screens) -->
-      <button class="menu-toggle" aria-label="メニューを開く" aria-expanded="false" aria-controls="mobile-nav">☰</button>
-
-      <!-- Reservation button placed at the top for quick access (外部予約ページへ移動) -->
-      <a class="reserve-btn" href="https://machinohige.github.io/reservation" target="_blank" rel="noopener noreferrer" role="button" aria-label="展示の予約ページを開く（別タブ）">予約する</a>
-    </div>
-  </header>
-
-  <!-- Mobile navigation overlay (injected DOM that will be toggled) -->
-      <div id="mobile-nav" class="mobile-nav" aria-hidden="true">
-    <div class="mobile-nav-inner">
-      <button class="mobile-close" aria-label="メニューを閉じる">✕</button>
-      <nav aria-label="モバイルナビ">
-        <a href="index.html">ホーム</a>
-        <a href="summary.html">あらすじ</a>
-        <a href="#gallery">ギャラリー</a>
-        <a href="#contact">お問い合わせ</a>
-      </nav>
-    </div>
-  </div>
+  <div id="shared-header" role="banner"></div>
 
   <main>
     <section class="hero">
@@ -104,12 +75,7 @@
     </section>
   </main>
 
-  <footer class="site-footer">
-    <div class="container">
-      <small><a href="credits.html" aria-label="クレジットページへ">© 東京高専2年情報工学科　秘宝タン・イーと記憶の洞窟</a></small>
-      <button id="secretBtn" class="mini secret-btn" aria-label="秘密のページへ" title="秘密のページへ">🗝</button>
-    </div>
-  </footer>
+  <div id="shared-footer" role="contentinfo"></div>
 
   <script src="script.js"></script>
 </body>
