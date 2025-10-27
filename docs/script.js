@@ -25,13 +25,74 @@
     setTimeout(()=>el.remove(),1900)
   }
 
-  const btn = document.getElementById('confettiBtn')
-  if(btn){
-    btn.addEventListener('click', (e)=>{
-      const rect = e.target.getBoundingClientRect()
-      for(let i=0;i<22;i++){
-        makeConfetti(rect.left + rect.width/2, rect.top + rect.height/2)
+  // Secret-button behavior: open a small accessible password modal (masked input)
+  const secretBtn = document.getElementById('secretBtn')
+  function createPasswordModal(){
+    if(document.getElementById('passwordModal')) return
+    const backdrop = document.createElement('div')
+    backdrop.className = 'modal-backdrop'
+    backdrop.id = 'passwordModal'
+    backdrop.tabIndex = -1
+
+    const modal = document.createElement('div')
+    modal.className = 'modal'
+    modal.innerHTML = `
+      <h4>パスワードで保護されたページ</h4>
+      <p class="muted">アクセスするにはパスワードを入力してください。</p>
+      <label>パスワード
+        <input id="pw-input" type="password" autocomplete="current-password" placeholder="パスワードを入力"> 
+      </label>
+      <div id="pw-error" style="color:#ffb3b3;margin-top:8px;display:none;font-size:0.95rem">パスワードが違います。</div>
+      <div class="actions">
+        <button class="btn-ghost" id="pw-cancel">キャンセル</button>
+        <button class="btn-primary" id="pw-submit">送信</button>
+      </div>
+    `
+
+    backdrop.appendChild(modal)
+    document.body.appendChild(backdrop)
+    // focus the input
+    const input = document.getElementById('pw-input')
+    setTimeout(()=> input && input.focus(), 50)
+
+    function close(){ backdrop.remove(); document.removeEventListener('keydown', onKey); document.body.style.overflow = '' }
+    function onKey(e){ if(e.key === 'Escape') close(); if(e.key === 'Enter') submit() }
+
+    document.getElementById('pw-cancel').addEventListener('click', close)
+    backdrop.addEventListener('click', function(e){ if(e.target === backdrop) close() })
+    document.addEventListener('keydown', onKey)
+
+    function submit(){
+      const v = input.value || ''
+      const err = document.getElementById('pw-error')
+      if(v === 'password'){
+        // success
+        const rect = secretBtn.getBoundingClientRect()
+        for(let i=0;i<28;i++) makeConfetti(rect.left + rect.width/2 + (Math.random()-0.5)*40, rect.top + rect.height/2 + (Math.random()-0.5)*10)
+        close()
+        setTimeout(()=> { window.location.href = 'secret.html' }, 700)
+      } else {
+        // show inline error and shake input
+        err.style.display = 'block'
+        input.animate([
+          { transform: 'translateX(0)' },
+          { transform: 'translateX(-6px)' },
+          { transform: 'translateX(6px)' },
+          { transform: 'translateX(0)' }
+        ], { duration: 300, easing: 'ease-out' })
+        input.focus()
       }
+    }
+
+    document.getElementById('pw-submit').addEventListener('click', submit)
+  }
+
+  if(secretBtn){
+    secretBtn.addEventListener('click', (e)=>{
+      e.preventDefault()
+      // open password modal, prevent background scroll
+      createPasswordModal()
+      document.body.style.overflow = 'hidden'
     })
   }
 

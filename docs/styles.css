@@ -1,135 +1,113 @@
 :root{
-  /* Dark, dramatic "adventure" palette */
-  --bg: #0b0c0f; /* deep near-black */
-  --card: #0f1418; /* slightly lighter card */
-  --muted: #9aa3ad; /* cool gray for secondary text */
-  --text: #eef6ff; /* off-white for main text */
-  --accent: #b8872f; /* warm gold */
-  --accent-2: #7a3e0b; /* deep amber / burnt sienna */
+  /* refined dark palette */
+  --bg: #07131a; /* deep charcoal-blue */
+  --panel: #0d1620; /* cards / panels */
+  --muted: #9aa6b0; /* secondary text */
+  --text: #eef3f7; /* main text */
+  --accent: #c9a951; /* soft gold */
+  --accent-2: #8a5a34; /* warm brown */
   --glass: rgba(255,255,255,0.03);
-  --shadow: 0 12px 36px rgba(2,6,23,0.7);
+  --ring: rgba(201,169,81,0.18);
+  --shadow-soft: 0 8px 22px rgba(2,8,15,0.5);
+  --shadow-deep: 0 18px 48px rgba(2,6,23,0.55);
   font-size:16px;
 }
 *{box-sizing:border-box}
-body{font-family:"Noto Sans JP", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial; background:linear-gradient(180deg, #080809 0%, var(--bg) 100%); color:var(--text); margin:0; -webkit-font-smoothing:antialiased}
-.container{max-width:1000px;padding:28px 20px;margin:0 auto}
-.site-header{background:linear-gradient(90deg,var(--accent-2),var(--accent));color:var(--text);padding:14px 0;box-shadow:var(--shadow)}
-.site-header .container{display:flex;align-items:center;justify-content:space-between}
-.logo{font-weight:900;margin:0;font-size:1.1rem;letter-spacing:0.6px}
-.reserve-btn{margin-left:18px;display:inline-block;padding:10px 14px;border-radius:10px;background:linear-gradient(180deg,var(--accent),var(--accent-2));color:#0b0c0f;font-weight:800;text-decoration:none;box-shadow:0 8px 24px rgba(184,131,47,0.18);border:1px solid rgba(255,255,255,0.05)}
-.reserve-btn:focus,.reserve-btn:hover{transform:translateY(-3px);box-shadow:0 14px 36px rgba(122,62,11,0.32)}
-nav a{color:rgba(255,246,225,0.95);text-decoration:none;margin-left:18px;font-weight:700}
-
-/* hero-specific reserve button tweaks */
-.hero .reserve-btn{margin-left:0;margin-top:12px;padding:12px 18px;font-size:1rem}
-
-@media (max-width:760px){
-  .hero .reserve-btn{width:86%;max-width:320px}
+body{
+  font-family: 'Noto Sans JP', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
+  background: linear-gradient(180deg,#031018 0%, var(--bg) 100%);
+  color:var(--text);
+  margin:0;
+  -webkit-font-smoothing:antialiased;
 }
-.hero{padding:48px 0}
-.hero-inner{display:flex;gap:24px;align-items:center}
-.hero h2{margin:0 0 10px;font-size:1.8rem;color:var(--text);text-shadow:0 6px 18px rgba(0,0,0,0.6)}
-.hero p{margin:0 0 12px;color:var(--muted);line-height:1.6}
-.cta{display:inline-block;background:linear-gradient(180deg,var(--accent),var(--accent-2));color:#0b0c0f;padding:10px 16px;border-radius:12px;text-decoration:none;font-weight:800;box-shadow:0 10px 24px rgba(184,131,47,0.18)}
+.container{max-width:1040px;padding:28px 20px;margin:0 auto}
+
+/* header */
+.site-header{
+  position:sticky;top:0;z-index:60;padding:14px 0;background:transparent;border-bottom:1px solid rgba(255,255,255,0.03);backdrop-filter:blur(6px)
+}
+.site-header .container{display:flex;align-items:center;justify-content:space-between;gap:16px}
+.logo{font-family:'Noto Serif JP', 'Noto Sans JP', serif; font-weight:700;margin:0;font-size:1.15rem;color:var(--text);letter-spacing:0.4px}
+
+/* nav */
+.main-nav a{color:var(--muted);text-decoration:none;margin-left:18px;font-weight:600;padding:8px;border-radius:8px;transition:color .15s ease, background .15s ease}
+.main-nav a:hover, .main-nav a:focus{color:var(--text);background:rgba(255,255,255,0.02)}
+
+/* reservation button (primary) */
+.reserve-btn{margin-left:18px;display:inline-block;padding:10px 14px;border-radius:10px;background:var(--accent);color:#07131a;font-weight:700;text-decoration:none;box-shadow:var(--shadow-soft);border:1px solid rgba(0,0,0,0.2)}
+.reserve-btn:focus,.reserve-btn:hover{transform:translateY(-3px);box-shadow:var(--shadow-deep);outline:3px solid var(--ring)}
+
+/* hero */
+.hero{padding:72px 0;min-height:60vh;display:flex;align-items:center}
+.hero-inner{display:flex;gap:32px;align-items:center}
+.hero h2{font-family:'Noto Serif JP', serif;margin:0 0 14px;font-size:clamp(1.6rem,3.6vw,2.6rem);line-height:1.02;color:var(--text)}
+.hero p{margin:0 0 16px;color:var(--muted);font-size:1.05rem}
+.hero .reserve-btn{margin-left:0;margin-top:10px;padding:12px 20px;font-size:1rem}
+
 .mascot{display:flex;align-items:center;justify-content:center}
-.features{padding:24px 0}
-.features h3{margin-top:0;color:var(--text)}
-.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:18px}
-.card{background:linear-gradient(180deg,var(--card), rgba(17,20,24,0.9));padding:16px;border-radius:12px;box-shadow:var(--shadow);border:1px solid rgba(255,255,255,0.02)}
-.gallery{padding:24px 0}
+
+/* content */
+.features{padding:32px 0}
+.features h3{margin-top:0;color:var(--text);font-family:'Noto Serif JP'}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:20px}
+.card{background:linear-gradient(180deg,var(--panel), rgba(13,22,32,0.95));padding:20px;border-radius:12px;box-shadow:var(--shadow-soft);border:1px solid rgba(255,255,255,0.02);transition:transform .16s ease, box-shadow .16s ease}
+.card:hover{transform:translateY(-6px);box-shadow:var(--shadow-deep)}
+.card h4{margin:0 0 8px;font-family:'Noto Serif JP'}
+.card p{margin:0;color:var(--muted)}
+
+.gallery{padding:28px 0}
 .muted{color:var(--muted)}
-.photos{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px}
-.photo{background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));border-radius:10px;overflow:hidden;cursor:pointer;display:flex;align-items:center;justify-content:center;padding:6px;box-shadow:0 8px 20px rgba(2,6,23,0.6);transition:transform .18s ease, box-shadow .18s ease}
-.photo:focus,.photo:hover{transform:translateY(-6px);box-shadow:0 18px 42px rgba(2,6,23,0.75)}
-.contact{padding:24px 0}
-.site-footer{border-top:1px solid rgba(255,255,255,0.04);padding:12px 0;margin-top:40px;background:transparent}
-.site-footer .container{display:flex;align-items:center;justify-content:space-between}
-.mini{background:transparent;border:1px solid rgba(255,255,255,0.04);padding:6px 10px;border-radius:8px;color:var(--text);cursor:pointer}
+.photos{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:14px}
+.photo{background:transparent;border-radius:10px;overflow:hidden;cursor:pointer;padding:0;box-shadow:var(--shadow-soft);transition:transform .18s ease, box-shadow .18s ease}
+.photo:focus,.photo:hover{transform:translateY(-6px);box-shadow:var(--shadow-deep)}
+.photo::after{content:"拡大して見る";position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);background:rgba(0,0,0,0.45);color:var(--text);padding:6px 10px;border-radius:8px;opacity:0;transition:opacity .18s ease}
+.photo:hover::after,.photo:focus::after{opacity:1}
 
-/* responsive tweaks */
-@media (max-width:760px){
-  .hero-inner{flex-direction:column;text-align:center}
-  nav a{margin-left:10px}
+.contact{padding:28px 0}
+
+.site-footer{border-top:1px solid rgba(255,255,255,0.03);padding:18px 0;margin-top:48px;background:transparent}
+.site-footer .container{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.mini{background:transparent;border:1px solid rgba(255,255,255,0.04);padding:8px 12px;border-radius:10px;color:var(--text);cursor:pointer}
+
+/* Secret key button more refined */
+.secret-btn{font-size:20px;padding:10px 12px;border-radius:10px;background:transparent;border:1px solid rgba(255,255,255,0.04);box-shadow:none;color:var(--text);transition:transform .12s ease, box-shadow .12s ease}
+.secret-btn:hover,.secret-btn:focus{transform:scale(1.08);box-shadow:0 8px 22px rgba(138,90,52,0.12)}
+
+/* responsive */
+@media (max-width:900px){
+  .container{padding:20px}
 }
-
-/* small playful confetti pieces (JS will add them) */
-.confetti-piece{position:fixed;width:10px;height:14px;pointer-events:none;z-index:9999;border-radius:2px;opacity:0.95}
-
-/* Mobile / hamburger menu styles */
-.menu-toggle{display:none;border:0;background:transparent;color:var(--text);font-size:22px;padding:8px 10px;border-radius:8px;cursor:pointer}
-.main-nav a{color:rgba(255,246,225,0.95);text-decoration:none;margin-left:18px;font-weight:700}
-
-/* mobile: hide desktop nav, show hamburger */
 @media (max-width:760px){
+  .hero{padding:36px 0}
+  .hero-inner{flex-direction:column;text-align:center}
   .main-nav{display:none}
   .menu-toggle{display:inline-block}
   .reserve-btn{margin-left:8px}
+  .mascot svg{max-width:120px;height:auto}
 }
 
 /* mobile nav overlay */
-.mobile-nav{position:fixed;inset:0;display:flex;align-items:flex-start;justify-content:center;padding-top:64px;padding-left:18px;padding-right:18px;background:rgba(2,6,23,0.85);backdrop-filter:blur(6px);opacity:0;pointer-events:none;transition:opacity .2s ease, transform .22s ease;transform:translateY(-6%);z-index:180}
+.menu-toggle{display:none;border:0;background:transparent;color:var(--text);font-size:22px;padding:8px 10px;border-radius:8px;cursor:pointer}
+.mobile-nav{position:fixed;inset:0;display:flex;align-items:flex-start;justify-content:center;padding-top:64px;padding-left:18px;padding-right:18px;background:linear-gradient(180deg, rgba(2,6,9,0.6), rgba(2,6,9,0.85));backdrop-filter:blur(6px);opacity:0;pointer-events:none;transition:opacity .2s ease, transform .22s ease;transform:translateY(-6%);z-index:180}
 .mobile-nav.open{opacity:1;pointer-events:auto;transform:translateY(0)}
-.mobile-nav-inner{max-width:420px;width:100%;background:linear-gradient(180deg,#0b0c0f,#111418);border-radius:12px;padding:20px;border:1px solid rgba(255,255,255,0.03);box-shadow:0 18px 48px rgba(2,6,23,0.8)}
+.mobile-nav-inner{max-width:420px;width:100%;background:linear-gradient(180deg,#07131a,#0d1620);border-radius:12px;padding:20px;border:1px solid rgba(255,255,255,0.03);box-shadow:var(--shadow-deep)}
 .mobile-nav nav{display:flex;flex-direction:column;gap:12px;margin-top:6px}
 .mobile-nav a{color:var(--text);text-decoration:none;padding:12px 14px;border-radius:8px;background:rgba(255,255,255,0.02);font-weight:700}
 .mobile-close{position:absolute;right:22px;top:22px;background:transparent;border:0;color:var(--muted);font-size:20px;cursor:pointer}
 
-/* Ensure mascot and hero scale nicely on narrow devices */
-.mascot svg{max-width:140px;height:auto}
-
-
-/* ---------- Festival / 文化祭 layout polish ---------- */
-/* Make header sticky so reservation button is always reachable */
-.site-header{position:sticky;top:0;z-index:60;padding-top:10px;padding-bottom:10px}
-.site-header .container{align-items:center;gap:12px}
-
-/* Emphasize hero for event landing */
-.hero{padding:56px 0;min-height:62vh;display:flex;align-items:center}
-.hero-inner{align-items:center}
-.hero{background-image: radial-gradient(ellipse at 20% 10%, rgba(186,142,56,0.06), transparent 20%), linear-gradient(180deg, rgba(0,0,0,0.18), transparent 30%)}
-.hero h2{font-size:2.1rem;line-height:1.05;margin-bottom:8px}
-.hero p{font-size:1.05rem}
-
-/* Add event meta ribbon in the hero using pseudo-element */
-.hero .container > div:first-child{position:relative}
-.hero .container > div:first-child::before{
-  content: "くぬぎだ祭 — 2年情報工学科　秘宝タン・イーと記憶の洞窟 11月1日~2日";
-  display:inline-block;padding:6px 10px;border-radius:8px;background:rgba(0,0,0,0.35);color:var(--accent-2);font-weight:700;margin-bottom:12px;border:1px solid rgba(255,255,255,0.02);font-size:0.9rem
-}
-
-/* Make mascot slightly darker to fit the mood (targets inline svg shapes) */
-.mascot svg circle:first-of-type{fill:linear-gradient(#603913,#b8872f)}
-.mascot svg text{fill:var(--accent-2)}
-
-/* Feature cards: numbered badges and stronger spacing */
-.card{padding:20px;border-radius:14px}
-.card::before{content:counter(card);counter-increment:card;display:inline-flex;align-items:center;justify-content:center;width:36px;height:36px;border-radius:8px;margin-bottom:10px;background:linear-gradient(180deg,var(--accent),var(--accent-2));color:#0b0c0f;font-weight:900}
-.grid{counter-reset:card}
-
-/* Gallery: larger preview feel and overlay caption */
-.photos{grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px}
-.photo{position:relative;padding:0}
-.photo svg, .photo img{width:100%;height:100%;display:block}
-.photo::after{content:"拡大して見る";position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);background:rgba(10,10,10,0.5);color:var(--text);padding:6px 10px;border-radius:8px;opacity:0;transition:opacity .18s ease}
-.photo:hover::after,.photo:focus::after{opacity:1}
-
-/* Contact: make it look like a reservation info panel */
-.contact{background:linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.00));padding:28px;border-radius:12px;border:1px solid rgba(255,255,255,0.02)}
-
-/* Modal styles (injected by JS) */
-.modal-backdrop{position:fixed;inset:0;background:rgba(2,6,23,0.7);display:flex;align-items:center;justify-content:center;z-index:200}
-.modal{background:linear-gradient(180deg,#0f1214,#111418);padding:20px;border-radius:12px;max-width:520px;width:92%;box-shadow:0 20px 60px rgba(2,6,23,0.8);border:1px solid rgba(255,255,255,0.03);color:var(--text)}
-.modal h4{margin:0 0 8px}
-.modal label{display:block;font-size:0.9rem;margin-top:10px;color:var(--muted)}
+/* modal */
+.modal-backdrop{position:fixed;inset:0;background:rgba(2,6,9,0.6);display:flex;align-items:center;justify-content:center;z-index:200}
+.modal{background:linear-gradient(180deg,#0b1216,#0d1418);padding:20px;border-radius:12px;max-width:520px;width:92%;box-shadow:var(--shadow-deep);border:1px solid rgba(255,255,255,0.03);color:var(--text)}
+.modal h4{margin:0 0 8px;font-family:'Noto Serif JP'}
+.modal label{display:block;font-size:0.95rem;margin-top:10px;color:var(--muted)}
 .modal input,.modal textarea,.modal select{width:100%;padding:10px;margin-top:6px;border-radius:8px;border:1px solid rgba(255,255,255,0.04);background:rgba(255,255,255,0.02);color:var(--text)}
-.modal .row{display:flex;gap:8px}
-.modal .row .col{flex:1}
-.modal .actions{display:flex;gap:10px;justify-content:flex-end;margin-top:14px}
 .btn-ghost{background:transparent;border:1px solid rgba(255,255,255,0.06);padding:8px 12px;border-radius:8px;color:var(--text);cursor:pointer}
-.btn-primary{background:linear-gradient(180deg,var(--accent),var(--accent-2));color:#0b0c0f;padding:8px 12px;border-radius:8px;border:0;cursor:pointer}
+.btn-primary{background:var(--accent);color:#07131a;padding:8px 12px;border-radius:8px;border:0;cursor:pointer}
 
-/* small screen tweaks */
+/* small tweaks */
 @media (max-width:520px){
   .hero h2{font-size:1.5rem}
-  .card::before{width:30px;height:30px}
 }
+
+/* confetti pieces */
+.confetti-piece{position:fixed;width:10px;height:14px;pointer-events:none;z-index:9999;border-radius:2px;opacity:0.95}
