@@ -18,3 +18,12 @@ Tools:
 - Inkscape (for vectors): Save as SVG, or File → Export PNG Image and choose "Export area drawing" with background transparent.
 
 After placing `logo.png`, reload the site. If you want, upload the PNG here and I can adjust sizing or swap to an SVG for better scaling.
+
+Gallery images
+
+Place gallery thumbnails at the following paths to be used by the sample pages:
+
+- `docs/assets/j.jpg` — gallery image 1
+- `docs/assets/ohno.jpg` — gallery image 2
+
+If you don't have thumbnails, you can use resized versions of your full images (recommended width ~800px) or create smaller thumbs (~400px) for faster loading.

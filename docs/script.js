@@ -112,11 +112,148 @@ function main(){
     })
   }
 
-  // small accessibility: allow photo divs to be opened (placeholder behavior)
+  // small accessibility: handle .photo items.
+  // If a .photo is an anchor linking to a video file, intercept it and open an in-page modal with a <video> player.
+  // Otherwise, keep the placeholder behavior for non-link photos.
+  function createVideoModal(src, label){
+    if(document.getElementById('videoModal')) return
+    const backdrop = document.createElement('div')
+    backdrop.className = 'modal-backdrop'
+    backdrop.id = 'videoModal'
+    backdrop.tabIndex = -1
+
+    const modal = document.createElement('div')
+    modal.className = 'modal'
+    modal.innerHTML = `
+      <div style="display:flex;align-items:center;justify-content:space-between;gap:12px">
+        <h4 style="margin:0">${label || '動画再生'}</h4>
+        <button class="btn-ghost" id="video-close" aria-label="閉じる">閉じる</button>
+      </div>
+      <div style="margin-top:12px">
+        <video id="modal-video" controls autoplay style="width:100%;height:auto;max-height:70vh;background:#000"> 
+          <source src="${src}" />
+          お使いのブラウザは video 要素をサポートしていません。
+        </video>
+      </div>
+    `
+
+    backdrop.appendChild(modal)
+    document.body.appendChild(backdrop)
+    // focus video for accessibility
+    const videoEl = document.getElementById('modal-video')
+    setTimeout(()=> videoEl && videoEl.focus(), 60)
+
+    function close(){
+      try{ if(videoEl){ videoEl.pause(); videoEl.src = ''; videoEl.load && videoEl.load() } }catch(e){}
+      backdrop.remove(); document.removeEventListener('keydown', onKey); document.body.style.overflow = ''
+    }
+    function onKey(e){ if(e.key === 'Escape') close() }
+
+    document.getElementById('video-close').addEventListener('click', close)
+    backdrop.addEventListener('click', function(e){ if(e.target === backdrop) close() })
+    document.addEventListener('keydown', onKey)
+    // prevent background scroll while modal open
+    document.body.style.overflow = 'hidden'
+  }
+
+  const videoExt = /\.(mp4|webm|ogg)(\?.*)?$/i
   document.querySelectorAll('.photo').forEach(p=>{
-    p.addEventListener('click', ()=>alert('ここに写真の拡大や説明を入れられます。'))
+    const tag = (p.tagName || '').toLowerCase()
+    if(tag === 'a'){
+      const href = p.getAttribute('href') || ''
+      // if link points to a video file, intercept and open modal
+      if(videoExt.test(href)){
+        p.addEventListener('click', function(e){
+          e.preventDefault()
+          createVideoModal(href, p.getAttribute('aria-label') || '動画再生')
+        })
+        p.addEventListener('keypress', (ev)=>{ if(ev.key === 'Enter') p.click() })
+        return
+      }
+      // image extensions -> open image modal instead of new tab
+      const imageExt = /\.(jpe?g|png|gif|webp|svg)(\?.*)?$/i
+      if(imageExt.test(href)){
+        p.addEventListener('click', function(e){
+          e.preventDefault()
+          createImageModal(href, p.querySelector('img') ? p.querySelector('img').alt : p.getAttribute('aria-label') || '画像')
+        })
+        p.addEventListener('keypress', (ev)=>{ if(ev.key === 'Enter') p.click() })
+        return
+      }
+      // otherwise allow default navigation but keep keyboard activation
+      p.addEventListener('keypress', (ev)=>{ if(ev.key === 'Enter') p.click() })
+      return
+    }
+    // non-anchor photos: if they contain an <img> or <svg>, open a generic modal that shows the content
+    p.addEventListener('click', function(){
+      const img = p.querySelector('img')
+      const svg = p.querySelector('svg')
+      if(img){ createImageModal(img.src, img.alt || p.getAttribute('aria-label') || '画像'); return }
+      if(svg){ createGenericModal(svg.cloneNode(true), p.getAttribute('aria-label') || '画像'); return }
+      // fallback: small placeholder
+      alert('ここに写真の拡大や説明を入れられます。')
+    })
     p.addEventListener('keypress', (ev)=>{ if(ev.key === 'Enter') p.click() })
   })
+
+  // create image modal
+  function createImageModal(src, alt){
+    if(document.getElementById('imageModal')) return
+    const backdrop = document.createElement('div')
+    backdrop.className = 'modal-backdrop'
+    backdrop.id = 'imageModal'
+    backdrop.tabIndex = -1
+
+    const modal = document.createElement('div')
+    modal.className = 'modal'
+    modal.innerHTML = `
+      <div style="display:flex;align-items:center;justify-content:space-between;gap:12px">
+        <h4 style="margin:0">${alt || '画像'}</h4>
+        <button class="btn-ghost" id="img-close" aria-label="閉じる">閉じる</button>
+      </div>
+      <div style="margin-top:12px;text-align:center">
+        <img src="${src}" alt="${alt || ''}" style="max-width:100%;height:auto;max-height:80vh;display:inline-block" />
+      </div>
+    `
+
+    backdrop.appendChild(modal)
+    document.body.appendChild(backdrop)
+    function close(){ backdrop.remove(); document.removeEventListener('keydown', onKey); document.body.style.overflow = '' }
+    function onKey(e){ if(e.key === 'Escape') close() }
+    document.getElementById('img-close').addEventListener('click', close)
+    backdrop.addEventListener('click', function(e){ if(e.target === backdrop) close() })
+    document.addEventListener('keydown', onKey)
+    document.body.style.overflow = 'hidden'
+  }
+
+  // create generic modal for cloned SVG or arbitrary node
+  function createGenericModal(node, title){
+    if(document.getElementById('genericModal')) return
+    const backdrop = document.createElement('div')
+    backdrop.className = 'modal-backdrop'
+    backdrop.id = 'genericModal'
+    backdrop.tabIndex = -1
+
+    const modal = document.createElement('div')
+    modal.className = 'modal'
+    modal.innerHTML = `
+      <div style="display:flex;align-items:center;justify-content:space-between;gap:12px">
+        <h4 style="margin:0">${title || ''}</h4>
+        <button class="btn-ghost" id="gen-close" aria-label="閉じる">閉じる</button>
+      </div>
+      <div style="margin-top:12px;text-align:center" id="gen-body"></div>
+    `
+    backdrop.appendChild(modal)
+    document.body.appendChild(backdrop)
+    const body = document.getElementById('gen-body')
+    if(body){ body.appendChild(node) }
+    function close(){ backdrop.remove(); document.removeEventListener('keydown', onKey); document.body.style.overflow = '' }
+    function onKey(e){ if(e.key === 'Escape') close() }
+    document.getElementById('gen-close').addEventListener('click', close)
+    backdrop.addEventListener('click', function(e){ if(e.target === backdrop) close() })
+    document.addEventListener('keydown', onKey)
+    document.body.style.overflow = 'hidden'
+  }
 
   /* Smooth scrolling for internal anchors (except when reserve button will open modal) */
   document.querySelectorAll('a[href^="#"]').forEach(a=>{

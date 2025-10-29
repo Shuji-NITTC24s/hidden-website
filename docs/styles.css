@@ -12,6 +12,14 @@
   --shadow-deep: 0 18px 48px rgba(2,6,23,0.55);
   font-size:16px;
 }
+/* Local corporate Mincho font (placed in docs/assets/) */
+@font-face{
+  font-family: 'Corporate Mincho';
+  src: url('assets/Corporate-Mincho-ver3.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
 *{box-sizing:border-box}
 body{
   font-family: 'Noto Sans JP', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
@@ -50,7 +58,7 @@ a:focus{color:var(--text);outline:3px solid var(--ring);outline-offset:2px}
 /* hero */
 .hero{padding:72px 0;min-height:60vh;display:flex;align-items:center}
 .hero-inner{display:flex;gap:32px;align-items:center}
-.hero h2{font-family:'Noto Serif JP', serif;margin:0 0 14px;font-size:clamp(1.6rem,3.6vw,2.6rem);line-height:1.02;color:var(--text)}
+.hero h2{font-family:'Corporate Mincho', 'Noto Serif JP', serif;margin:0 0 14px;font-size:clamp(1.6rem,3.6vw,2.6rem);line-height:1.02;color:var(--text)}
 .hero p{margin:0 0 16px;color:var(--muted);font-size:1.05rem}
 .hero .reserve-btn{margin-left:0;margin-top:10px;padding:12px 20px;font-size:1rem}
 
@@ -58,11 +66,12 @@ a:focus{color:var(--text);outline:3px solid var(--ring);outline-offset:2px}
 
 /* content */
 .features{padding:32px 0}
-.features h3{margin-top:0;color:var(--text);font-family:'Noto Serif JP'}
+.features h3{margin-top:0;color:var(--text);font-family:'Corporate Mincho', 'Noto Serif JP'}
+.features p, .card p { font-family: 'Corporate Mincho', 'Noto Serif JP', 'Noto Mincho', serif; color:var(--muted); }
 .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:20px}
 .card{background:linear-gradient(180deg,var(--panel), rgba(13,22,32,0.95));padding:20px;border-radius:12px;box-shadow:var(--shadow-soft);border:1px solid rgba(255,255,255,0.02);transition:transform .16s ease, box-shadow .16s ease}
 .card:hover{transform:translateY(-6px);box-shadow:var(--shadow-deep)}
-.card h4{margin:0 0 8px;font-family:'Noto Serif JP'}
+.card h4{margin:0 0 8px;font-family:'Corporate Mincho', 'Noto Serif JP'}
 .card p{margin:0;color:var(--muted)}
 
 .gallery{padding:28px 0}
@@ -72,6 +81,12 @@ a:focus{color:var(--text);outline:3px solid var(--ring);outline-offset:2px}
 .photo:focus,.photo:hover{transform:translateY(-6px);box-shadow:var(--shadow-deep)}
 .photo::after{content:"拡大して見る";position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);background:rgba(0,0,0,0.45);color:var(--text);padding:6px 10px;border-radius:8px;opacity:0;transition:opacity .18s ease}
 .photo:hover::after,.photo:focus::after{opacity:1}
+
+/* thumbnails inside .photo anchors */
+.photo img{display:block;width:100%;height:auto;object-fit:cover}
+.photo{position:relative;display:block}
+.photo .play-overlay{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);background:rgba(0,0,0,0.45);color:var(--text);padding:8px 12px;border-radius:999px;font-weight:700;box-shadow:0 6px 18px rgba(2,6,9,0.6)}
+.photo:focus .play-overlay,.photo:hover .play-overlay{background:rgba(0,0,0,0.6);transform:translate(-50%,-50%) scale(1.05)}
 
 .contact{padding:28px 0}
 
