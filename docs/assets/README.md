@@ -1,6 +1,6 @@
 logo image placement and transparency
 
-Place your logo file at `docs/assets/logo.png` (recommended filename).
+Place your logo file at `docs/assets/logo.svg` (recommended filename). If you only have a PNG, `docs/assets/logo.png` is also supported.
 
 Recommended export settings for a transparent PNG:
 
@@ -17,7 +17,7 @@ Tools:
 - Photopea (web): File → Export As → PNG, check Transparent.
 - Inkscape (for vectors): Save as SVG, or File → Export PNG Image and choose "Export area drawing" with background transparent.
 
-After placing `logo.png`, reload the site. If you want, upload the PNG here and I can adjust sizing or swap to an SVG for better scaling.
+After placing `logo.svg` (or `logo.png`), reload the site. If you want, upload the image here and I can adjust sizing or help convert it to an SVG for better scaling.
 
 Gallery images
 
