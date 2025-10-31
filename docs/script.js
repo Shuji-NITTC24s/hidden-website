@@ -54,9 +54,9 @@ function main() {
     modal.className = 'modal'
     modal.innerHTML = `
       <h4>パスワードで保護されたページ</h4>
-      <p class="muted">アクセスするにはパスワードを入力してください。</p>
+      <p class="muted">アクセスするにはパスワードを入力してください。ヒント：ひらがな7文字！</p>
       <label>パスワード
-        <input id="pw-input" type="password" autocomplete="current-password" placeholder="パスワードを入力"> 
+        <input id="pw-input" type="text" autocomplete="off" placeholder="パスワードを入力"> 
       </label>
       <div id="pw-error" style="color:#ffb3b3;margin-top:8px;display:none;font-size:0.95rem">パスワードが違います。</div>
       <div class="actions">
@@ -81,7 +81,7 @@ function main() {
     function submit() {
       const v = input.value || ''
       const err = document.getElementById('pw-error')
-      if (v === '017') {
+      if (v === 'あかてんかいひ') {
         // success
         const rect = secretBtn.getBoundingClientRect()
         for (let i = 0; i < 28; i++) makeConfetti(rect.left + rect.width / 2 + (Math.random() - 0.5) * 40, rect.top + rect.height / 2 + (Math.random() - 0.5) * 10)
