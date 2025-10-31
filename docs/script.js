@@ -81,7 +81,7 @@ function main() {
     function submit() {
       const v = input.value || ''
       const err = document.getElementById('pw-error')
-      if (v === 'password') {
+      if (v === '017') {
         // success
         const rect = secretBtn.getBoundingClientRect()
         for (let i = 0; i < 28; i++) makeConfetti(rect.left + rect.width / 2 + (Math.random() - 0.5) * 40, rect.top + rect.height / 2 + (Math.random() - 0.5) * 10)
